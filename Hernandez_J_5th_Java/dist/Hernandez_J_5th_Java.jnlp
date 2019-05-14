@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Hernandez_J_5th_Java.jnlp">
+  <information>
+    <title>Hernandez_J_5th_Java</title>
+    <vendor>shogun</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Hernandez_J_5th_Java.jar" size="36946970" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Hernandez_J_5th_Java" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="Hernandez_5_javafx.Hernandz_J_5th_JavaGame"  name="Hernandez_J_5th_Java" />
+  <update check="always"/>
+</jnlp>
