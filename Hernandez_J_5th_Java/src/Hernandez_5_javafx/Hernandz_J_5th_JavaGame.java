@@ -210,9 +210,31 @@ public class Hernandz_J_5th_JavaGame extends Application {
                 }
             }
 
-            private void checkBounds(Rectangle jedi) {
-                                                         //To change body of genestormtroopered methods, choose Tools | Templates.
+                private void checkBounds(Rectangle Luke) {
+        Color light = Color.GOLDENROD;
+        Color dark = Color.RED;
+        Color grey = Color.DARKTURQUOISE;
+        Color black = Color.RED;
+        // checkBounds is called in two different locations --- it's really only necessary in the animation dohandle
+        // experiment - check the differences
+
+        boolean collisionDetected = false;
+
+        // notice the difference in how an ArrayList itestormtrooperes through items
+        for (Rectangle badblock : badblockz) {
+            if (Luke.getBoundsInParent().intersects(badblock.getBoundsInParent())) {
+                collisionDetected = true;
+                badblock.setFill(black);
+            } else {
+                badblock.setFill(grey);
             }
+        }
+        if (collisionDetected) {
+            Luke.setFill(dark);
+        } else {
+            Luke.setFill(light);
+        }
+    }
         });
 
 //        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -249,54 +271,16 @@ public class Hernandz_J_5th_JavaGame extends Application {
      */
     //// ^^^^^^^^^^^  MAIN ^^^^^^^^^^^^^
     // we create our time here --- to animate 
-    private class MyTimer extends AnimationTimer {
+    public static void main(String[] args) {
+        launch(args);
+
+       
+    }
+    private abstract class MyTimer extends AnimationTimer {
 
         boolean movedown = true;
         boolean moveright = true;
-
-        /// handle is defined by the abstract parent class -- it must be redined
-        /// this is what happens again and again until stop()
-        @Override
-        public void handle(long now) {
-            // You can look at the key presses here as well -- this is one of many. Try others
-            /*   
-                if (input.contains("LEFT")) {
-                Luke.setX(Luke.getX() - 5);
-            }
-             */
-
-            doHandle();
-
-            ///i1.inty +=1;
-            /// notice doHandle()  is what happens again and again it's defined below
-        }
-
-        private void doHandle() {
-            checkBounds(Luke);
-            if (!b1.BEGIN()) {
-
-            } else {
-                barrier.setX(Force.picture.getX());
-                barrier.setY(Force.picture.getY());
-                barrier.setWidth(Force.picture.getFitWidth());
-                barrier.setHeight(Force.picture.getFitHeight());
-                for (Enemy e : enemiez) {
-                    if (e.doMove()) {
-                        e.chase(Luke.picture.getX(), Luke.picture.getY());
-                        if (e.hitPlayer((int) Luke.picture.getX(), (int) Luke.picture.getY())) {
-                            if (e.doHit()){
-                          
-                    
-                
-                if (Luke.isDead()){
-                    
-                }
-            }
-        }
-     }
-    }
-            }
-            
+        
         private void checkBounds(Rectangle Luke) {
         Color light = Color.GOLDENROD;
         Color dark = Color.RED;
@@ -326,6 +310,23 @@ public class Hernandz_J_5th_JavaGame extends Application {
 
     }
 
+
+        /// handle is defined by the abstract parent class -- it must be redined
+        /// this is what happens again and again until stop()
+        public void handle(long now) {
+            
+            
+          
+
+            doHandle();
+
+            ///i1.inty +=1;
+            /// notice doHandle()  is what happens again and again it's defined below
+        }
+        
+
+        
+        
 class Hero extends Rectangle {
 
     int x, y;
@@ -710,5 +711,4 @@ class Enemy extends Rectangle {
         }
         }
     }
-
-}
+    }
