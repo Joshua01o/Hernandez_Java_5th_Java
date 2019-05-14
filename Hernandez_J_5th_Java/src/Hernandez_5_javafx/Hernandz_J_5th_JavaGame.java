@@ -104,6 +104,7 @@ public class Hernandz_J_5th_JavaGame extends Application {
         Scene scene = new Scene(root, 600, 600, YELLOW);
         primaryStage.setTitle("Duel of the fates");
         primaryStage.setScene(scene);
+        
 
         Canvas canvas = new Canvas();
         //Notice gc is not being used yet 
@@ -111,8 +112,8 @@ public class Hernandz_J_5th_JavaGame extends Application {
 
         b1 = new publicB();
         Luke = new Hero(36,42);
-       Vader = new Badperson(6, 142);
-       stormtrooper1 = new Enemy(850, 150, 40, 80, 1, "down");
+        Vader = new Badperson(6, 142);
+        stormtrooper1 = new Enemy(850, 150, 40, 80, 1, "down");
         stormtrooper1.setFill(Color.DARKTURQUOISE);
         Force = new Enemy(500, 100, 40, 80, 1, "up");
         Force.setFill(Color.DARKTURQUOISE);
@@ -276,12 +277,18 @@ public class Hernandz_J_5th_JavaGame extends Application {
 
        
     }
-    private abstract class MyTimer extends AnimationTimer {
+    private class MyTimer extends AnimationTimer {
 
         boolean movedown = true;
         boolean moveright = true;
-        
-        private void checkBounds(Rectangle Luke) {
+ 
+
+        /// handle is defined by the abstract parent class -- it must be redined
+        /// this is what happens again and again until stop()
+        @Override
+        public void handle(long now) {
+            
+                   
         Color light = Color.GOLDENROD;
         Color dark = Color.RED;
         Color grey = Color.DARKTURQUOISE;
@@ -305,26 +312,12 @@ public class Hernandz_J_5th_JavaGame extends Application {
         } else {
             Luke.setFill(light);
         }
-    }
     
-
-    }
-
-
-        /// handle is defined by the abstract parent class -- it must be redined
-        /// this is what happens again and again until stop()
-        public void handle(long now) {
+       
             
-            
-          
-
-            doHandle();
-
-            ///i1.inty +=1;
-            /// notice doHandle()  is what happens again and again it's defined below
-        }
+               }
         
-
+    }
         
         
 class Hero extends Rectangle {
@@ -600,23 +593,35 @@ class Enemy extends Rectangle {
         this.picture.setFitWidth(width);
         this.picture.setFitHeight(height);
         if (spos == "up") {
+            
             this.picture.setImage(stormtrooperpic1);
+        
         } else if (spos == "down") {
+            
             this.picture.setImage(stormtrooperpic2);
+        
         } else if (spos == "right") {
+            
             this.picture.setImage(stormtrooperpic3);
+        
         } else if (spos == "left") {
+            
             this.picture.setImage(stormtrooperpic4);
         }
     }
 
     public void changePicture(String changeimage) {
         if (changeimage == "down") {
+            
             this.picture.setFitWidth(40);
+            
             this.picture.setFitHeight(80);
+            
             picture.setImage(stormtrooperpic2);
         } else if (changeimage == "left") {
+            
             this.picture.setFitWidth(80);
+            
             this.picture.setFitHeight(40);
             picture.setImage(stormtrooperpic3);
         } else if (changeimage == "right") {
