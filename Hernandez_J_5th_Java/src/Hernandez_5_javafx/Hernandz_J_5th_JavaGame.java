@@ -16,17 +16,8 @@ package Hernandez_5_javafx;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
@@ -36,7 +27,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import static javafx.scene.input.DataFormat.URL;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -48,15 +38,11 @@ import javafx.scene.text.Text;
 //import javafx.event.Event;
 //import javafx.scene.Node;
 //import javafx.scene.control.Button;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 //import static javafx.scene.input.KeyCombination.SHIFT_DOWN;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 //import javafx.scene.input.DataFormat.URL;
-import javafx.scene.media.*;
-import static javafx.scene.input.KeyCode.SPACE;
 import static javafx.scene.paint.Color.YELLOW;
 
 
@@ -84,14 +70,14 @@ public class Hernandz_J_5th_JavaGame extends Application {
     Enemy stormtrooper1;
     Enemy stormtrooper2;
     Enemy stormtrooper3;
-    Enemy Force;
+    Enemy DarkSide;
     Rectangle barrier;
     Rectangle wall1;
     Rectangle wall2;
     Rectangle wall3;
     Rectangle wall4;
     boolean BEGIN = true;
-    private Media media;
+    private Media Media;
 
     @Override
     public void start(Stage primaryStage) {
@@ -115,27 +101,27 @@ public class Hernandz_J_5th_JavaGame extends Application {
         Vader = new Badperson(6, 142);
         stormtrooper1 = new Enemy(850, 150, 40, 80, 1, "down");
         stormtrooper1.setFill(Color.DARKTURQUOISE);
-        Force = new Enemy(500, 100, 40, 80, 1, "up");
-        Force.setFill(Color.DARKTURQUOISE);
+        DarkSide = new Enemy(500, 100, 40, 80, 1, "up");
+        DarkSide.setFill(Color.DARKTURQUOISE);
         stormtrooper2 = new Enemy(350, 450, 100, 40, 1, "right");
         stormtrooper2.setFill(Color.DARKTURQUOISE);
         stormtrooper3 = new Enemy(1050, 650, 80, 40, 1, "left");
         stormtrooper3.setFill(Color.DARKTURQUOISE);
         enemiez.add(stormtrooper1);
-        enemiez.add(Force);
+        enemiez.add(DarkSide);
         enemiez.add(stormtrooper2);
         enemiez.add(stormtrooper3);
         barrier = new Wall(100, 100);
 
 
 
-        media = new Media("file:///home/joshua02o/NetBeansProjects/Hernandez_J_5th_Java/src/Battleoftheheroes.wav");
+         Media = new Media("file:///home/joshua02o/NetBeansProjects/Hernandez_J_5th_Java/src/Battleoftheheroes.wav");
         // beat = new MediaPlayer(media);
         // beat.play();
         //final URL resource = getClass().getResources("Battleoftheheroes.mp3");
         System.out.println("Now Playing: THE BEST SADDEST MUSIC IN THE WORLD!");
 
-        /*
+        
        Luke.picture.setX(Luke.getX());
        Luke.picture.setY(Luke.getY());
 
@@ -144,7 +130,7 @@ public class Hernandz_J_5th_JavaGame extends Application {
         //  Group root = new Group(Luke.picture);
         //notice we are creating shape objects 
        
-         */
+        
         sttx = new Text(750, 100, "");
         sttx.setFont(new Font(50));
         sttx.setText("Welcome\nto the\nJedi Academy!" + "\n\n\nPress '0' to start!");
@@ -166,52 +152,40 @@ public class Hernandz_J_5th_JavaGame extends Application {
             @Override
             
             public void handle(KeyEvent event) {
-                checkBounds(jedi);
-                if (!b1.BEGIN()) {
-                    if (event.getCode() == KeyCode.DIGIT0) {
-                        swall.setHeight(0);
-                        swall.setWidth(0);
-                        sttx.setText(" ");
-                        b1.setBegin(true);
-                        BEGIN = false;
+               //String code = event.getCode().toString();
+                //    input.remove( code  
+                if(!b1.BEGIN()){
+                     if (event.getCode() == KeyCode.DIGIT0) {
+                    swall.setHeight(0);
+                    swall.setWidth(0);
+                    //stxt.setText("Timer: "+ i1.inty);
+                    sttx.setText("");
+                    b1.setBegin(true);
+     
+                }
+                } else {
+                if (event.getCode() == KeyCode.RIGHT) { // don't use toString here!!!
+                            jedi.moveRight();
+                            checkBounds(jedi);
+                } else if (event.getCode() == KeyCode.LEFT) {
+                            jedi.moveLeft();
+                            checkBounds(jedi);
+                } else if (event.getCode() == KeyCode.UP) {
+                        jedi.moveUp();
+                        checkBounds(jedi);
+                } else if (event.getCode() == KeyCode.DOWN) {
+                        jedi.moveDown();
+                        checkBounds(jedi);
+                } else if (event.getCode() == KeyCode.SPACE) {
+                            for(Enemy e: enemiez){
+                                e.chase(jedi.getX(), jedi.getY());
+                            }
                     }
                 }
+            
 
-                if (!BEGIN) {
-                    if (null!=event.getCode()) switch (event.getCode()) {
-                        case D:
-                        case RIGHT:
-                            // don't use toString here!!!
-                            Vader.setRight();
-                            jedi.setX(jedi.getX() + 5);
-                            checkBounds(jedi);
-                            break;
-                        case LEFT:
-                        case A:
-                            Vader.setLeft();
-                            jedi.setX(jedi.getX() - 5);
-                            checkBounds(jedi);
-                            break;
-                        case UP:
-                        case W:
-                            Vader.setUp();
-                            jedi.setY(jedi.getY() - 5);
-                            jedi.setFill(Color.GREEN);
-                            checkBounds(jedi);
-                            break;
-                        case DOWN:
-                        case S:
-                            Vader.setDown();
-                            jedi.setY(jedi.getY() + 5);
-                            checkBounds(jedi);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
 
-                private void checkBounds(Rectangle Luke) {
+        private void checkBounds(Rectangle Luke){
         Color light = Color.GOLDENROD;
         Color dark = Color.RED;
         Color grey = Color.DARKTURQUOISE;
@@ -236,16 +210,16 @@ public class Hernandz_J_5th_JavaGame extends Application {
             Luke.setFill(light);
         }
     }
-        });
+         });
 
-//        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent event) {
-//                if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT) {
-//                    // forceuserangleVelocity.set(0);
-//                }
-//            }
-//        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT) {
+                    //forceuserangleVelocity.set(0);
+                }
+            }
+        });
         //try disabling canvas --- notice the difference 
         root.getChildren().add(canvas);
         //notice we are manually adding the COLOR.BLUE shape objects to the "root" window
@@ -259,10 +233,10 @@ public class Hernandz_J_5th_JavaGame extends Application {
         root.getChildren().add(wall2);
         root.getChildren().add(wall3);
         root.getChildren().add(wall4);
-
         timer.start();
         primaryStage.show();
     }
+
 
 
     /**
@@ -592,46 +566,48 @@ class Enemy extends Rectangle {
         this.picture.setY(y);
         this.picture.setFitWidth(width);
         this.picture.setFitHeight(height);
-        if (spos == "up") {
-            
-            this.picture.setImage(stormtrooperpic1);
-        
-        } else if (spos == "down") {
-            
-            this.picture.setImage(stormtrooperpic2);
-        
-        } else if (spos == "right") {
-            
-            this.picture.setImage(stormtrooperpic3);
-        
-        } else if (spos == "left") {
-            
-            this.picture.setImage(stormtrooperpic4);
+        if (null != spos) switch (spos) {
+            case "up":
+                this.picture.setImage(stormtrooperpic1);
+                break;
+            case "down":
+                this.picture.setImage(stormtrooperpic2);
+                break;
+            case "right":
+                this.picture.setImage(stormtrooperpic3);
+                break;
+            case "left":
+                this.picture.setImage(stormtrooperpic4);
+                break;
+            default:
+                break;
         }
     }
 
     public void changePicture(String changeimage) {
-        if (changeimage == "down") {
-            
-            this.picture.setFitWidth(40);
-            
-            this.picture.setFitHeight(80);
-            
-            picture.setImage(stormtrooperpic2);
-        } else if (changeimage == "left") {
-            
-            this.picture.setFitWidth(80);
-            
-            this.picture.setFitHeight(40);
-            picture.setImage(stormtrooperpic3);
-        } else if (changeimage == "right") {
-            picture.setImage(stormtrooperpic1);
-            this.picture.setFitWidth(80);
-            this.picture.setFitHeight(40);
-        } else if (changeimage == "up") {
-            this.picture.setFitWidth(40);
-            this.picture.setFitHeight(80);
-            picture.setImage(stormtrooperpic4);
+        if (null != changeimage) switch (changeimage) {
+            case "down":
+                this.picture.setFitWidth(40);
+                this.picture.setFitHeight(80);
+                picture.setImage(stormtrooperpic2);
+                break;
+            case "left":
+                this.picture.setFitWidth(80);
+                this.picture.setFitHeight(40);
+                picture.setImage(stormtrooperpic3);
+                break;
+            case "right":
+                picture.setImage(stormtrooperpic1);
+                this.picture.setFitWidth(80);
+                this.picture.setFitHeight(40);
+                break;
+            case "up":
+                this.picture.setFitWidth(40);
+                this.picture.setFitHeight(80);
+                picture.setImage(stormtrooperpic4);
+                break;
+            default:
+                break;
         }
 
     }
@@ -653,14 +629,21 @@ class Enemy extends Rectangle {
     }
 
     public void move(String m) {
-        if (m == "right") {
-            this.picture.setX(this.picture.getX() + 15);
-        } else if (m == "left") {
-            this.picture.setX(this.picture.getX() - 15);
-        } else if (m == "up") {
-            this.picture.setY(this.picture.getY() - 15);
-        } else if (m == "down") {
-            this.picture.setY(this.picture.getY() + 15);  
+        if (null != m) switch (m) {
+            case "right":
+                this.picture.setX(this.picture.getX() + 15);
+                break;
+            case "left":
+                this.picture.setX(this.picture.getX() - 15);
+                break;
+            case "up":  
+                this.picture.setY(this.picture.getY() - 15);
+                break;
+            case "down":
+                this.picture.setY(this.picture.getY() + 15);
+                break;
+            default:
+                break;
         }
     }
 
@@ -670,10 +653,13 @@ class Enemy extends Rectangle {
         boolean ytwo = false;
         int xSearch = 0;
         int ySearch = 0;
-        if ((this.picture.getImage() == stormtrooperpic3) || (this.picture.getImage() == stormtrooperpic1)) {
+        if ((this.picture.getImage() == stormtrooperpic3)||
+                (this.picture.getImage() == stormtrooperpic1)) {
             xSearch = 40;
             ySearch = 60;
-        } else if ((this.picture.getImage() == stormtrooperpic2) || (this.picture.getImage() == stormtrooperpic4)) {
+        } else if ((this.picture.getImage() == stormtrooperpic2)||
+                
+                (this.picture.getImage() == stormtrooperpic4)) {
             ySearch = 40;
             xSearch = 60;
         }
@@ -699,21 +685,13 @@ class Enemy extends Rectangle {
     public boolean doMove() {
         Random chase = new Random();
         int rc = (chase.nextInt(this.move));
-        if (rc == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return rc == 1;
 
     }
         public boolean doHit(){
         Random hit = new Random();
         int rc = (hit.nextInt(7));
-        if (rc == 1){
-            return true;
-        }else{
-            return false;
-        }
+        return rc == 1;
         }
     }
     }
